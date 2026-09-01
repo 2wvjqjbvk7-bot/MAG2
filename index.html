@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAG — Costura artesanal hecha a mano</title>
+  <link rel="stylesheet" href="mag-common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Hero Principal -->
+  <section class="hero">
+    <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=1600" class="hero-img" alt="Taller de costura">
+    <div class="hero-overlay"></div>
+    <div class="wrap hero-content">
+      <span class="hero-tag">TALLER DE COSTURA · VALENCIA</span>
+      <h1 class="hero-title">Hecho a mano,<br>pieza a pieza</h1>
+      <a href="catalogo.html" class="btn-underline">Ver el catálogo ➔</a>
+    </div>
+  </section>
+
+  <!-- Categorías -->
+  <section class="section">
+    <div class="wrap">
+      <span class="section-tag">CATEGORÍAS</span>
+      <h2 class="section-title">Elige por dónde empezar</h2>
+      
+      <div class="cat-grid">
+        <a href="catalogo.html?cat=Bolsos" class="cat-card large">
+          <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800" style="width:100%; height:100%; object-fit:cover;">
+          <div class="cat-card-info">
+            <h3 class="cat-card-title">Bolsos</h3>
+            <p class="cat-card-sub">Para el día a día</p>
+          </div>
+        </a>
+        <a href="catalogo.html?cat=Neceseres" class="cat-card medium">
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800" style="width:100%; height:100%; object-fit:cover;">
+          <div class="cat-card-info">
+            <h3 class="cat-card-title">Neceseres</h3>
+            <p class="cat-card-sub">Orden con encanto</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Características -->
+  <section class="section" style="background:#F7F3EC; padding: 40px 0;">
+    <div class="wrap" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align:center;">
+      <div>
+        <h4 style="font-family:var(--font-serif); font-size:20px;">Cosido a mano</h4>
+        <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Cada pieza se corta y se cose individualmente.</p>
+      </div>
+      <div>
+        <h4 style="font-family:var(--font-serif); font-size:20px;">Personalizable</h4>
+        <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Iniciales o frases bordadas para que sea único.</p>
+      </div>
+      <div>
+        <h4 style="font-family:var(--font-serif); font-size:20px;">Trato cercano</h4>
+        <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Cerramos el pedido hablando por WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Piezas favoritas -->
+  <section class="section">
+    <div class="wrap">
+      <span class="section-tag">SELECCIÓN</span>
+      <h2 class="section-title">Piezas favoritas</h2>
+      <div class="products-grid" id="home-products"></div>
+    </div>
+  </section>
+
+  <script src="mag-common.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("home-products");
+      grid.innerHTML = MAG_PRODUCTS.slice(0, 4).map(p => `
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="${p.img}" alt="${p.nombre}" style="width:100%; height:100%; object-fit:cover;">
+            <button class="fav-btn">♡</button>
+          </div>
+          <h3 class="product-title">${p.nombre}</h3>
+          <p class="product-desc">${p.desc}</p>
+          <div class="product-price">${p.precio} €</div>
+        </div>
+      `).join("");
+    });
+  </script>
+</body>
+</html>
