@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalización — MAG</title>
+  <link rel="stylesheet" href="mag-common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section class="section" style="max-width: 700px; margin: 0 auto;">
+    <div class="wrap">
+      <span class="section-tag">A MEDIDA</span>
+      <h1 class="section-title" style="font-size: 40px;">Personalización</h1>
+      <p style="color:var(--text-muted); margin-bottom: 32px;">
+        Casi todas las piezas se pueden bordar a mano con letras, nombres o frases. Nos cuentas qué quieres, elegimos juntas el hilo y el tipo de letra, y lo cosemos antes de montar la pieza.
+      </p>
+
+      <!-- Tabla de Precios -->
+      <div style="margin-bottom: 40px;">
+        <div class="price-card">
+          <div>
+            <div class="price-card-title">Letras e iniciales</div>
+            <p style="font-size:13px; color:var(--text-muted);">Una o dos letras bordadas en una esquina.</p>
+          </div>
+          <div class="price-card-amount">+3 €</div>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <div class="price-card-title">Nombre completo</div>
+            <p style="font-size:13px; color:var(--text-muted);">El nombre bordado en hilo a juego o en contraste.</p>
+          </div>
+          <div class="price-card-amount">+5 €</div>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <div class="price-card-title">Frase corta</div>
+            <p style="font-size:13px; color:var(--text-muted);">Hasta cuatro palabras, en letra cursiva o de imprenta.</p>
+          </div>
+          <div class="price-card-amount">+8 €</div>
+        </div>
+      </div>
+
+      <!-- Formulario para encargar -->
+      <div style="background:#fff; border:1px solid var(--border-light); padding:24px; border-radius:6px;">
+        <h3 style="font-family:var(--font-serif); margin-bottom:16px;">¿Cómo quieres tu personalización?</h3>
+        <form onsubmit="sendCustomWhatsApp(event)">
+          <div style="margin-bottom: 16px;">
+            <label style="display:block; font-size:11px; text-transform:uppercase; margin-bottom:6px;">Artículo a personalizar</label>
+            <input type="text" id="custom-item" required placeholder="Ej: Neceser acolchado" style="width:100%; padding:10px; border:1px solid var(--border-light); outline:none;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display:block; font-size:11px; text-transform:uppercase; margin-bottom:6px;">Texto a bordar y detalles (color, tipo de letra...)</label>
+            <textarea id="custom-text" rows="4" required placeholder="Ej: Nombre 'Carmen' en hilo terracota cursiva" style="width:100%; padding:10px; border:1px solid var(--border-light); outline:none; font-family:var(--font-sans);"></textarea>
+          </div>
+          <button type="submit" class="btn-rust">Consultar personalización por WhatsApp</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="mag-common.js"></script>
+  <script>
+    function sendCustomWhatsApp(e) {
+      e.preventDefault();
+      const item = document.getElementById("custom-item").value;
+      const text = document.getElementById("custom-text").value;
+      const msg = `Hola! Me gustaría consultar una personalización:\n\n- Artículo: ${item}\n- Detalles: ${text}`;
+      window.open(`https://wa.me/${window.MAG_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+  </script>
+</body>
+</html>
