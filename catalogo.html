@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo — MAG</title>
+  <link rel="stylesheet" href="mag-common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="catalog-layout">
+      
+      <!-- Menú lateral fijo de categorías -->
+      <aside class="catalog-sidebar">
+        <h4>Categorías</h4>
+        <ul>
+          <li><a href="#" class="cat-filter active" data-cat="Todo">Todo</a></li>
+          <li><a href="#" class="cat-filter" data-cat="Bolsos">Bolsos</a></li>
+          <li><a href="#" class="cat-filter" data-cat="Neceseres">Neceseres</a></li>
+          <li><a href="#" class="cat-filter" data-cat="Fundas de gafas">Fundas de gafas</a></li>
+          <li><a href="#" class="cat-filter" data-cat="Ordenador e iPad">Ordenador e iPad</a></li>
+        </ul>
+      </aside>
+
+      <!-- Grid de productos -->
+      <main class="catalog-content">
+        <span class="section-tag">CATÁLOGO</span>
+        <h1 class="section-title" id="cat-title">Todas las piezas</h1>
+        <div class="products-grid" id="catalog-products"></div>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="mag-common.js"></script>
+  <script>
+    let activeCat = "Todo";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get("cat");
+      if (catParam) activeCat = catParam;
+
+      window.renderPageProducts = renderProducts;
+      setupFilters();
+      renderProducts();
+    });
+
+    function setupFilters() {
+      document.querySelectorAll(".cat-filter").forEach(link => {
+        if (link.getAttribute("data-cat") === activeCat) link.classList.add("active");
+        else link.classList.remove("active");
+
+        link.onclick = (e) => {
+          e.preventDefault();
+          document.querySelectorAll(".cat-filter").forEach(l => l.classList.remove("active"));
+          link.classList.add("active");
+          activeCat = link.getAttribute("data-cat");
+          renderProducts();
+        };
+      });
+    }
+
+    function renderProducts() {
+      document.getElementById("cat-title").innerText = activeCat === "Todo" ? "Todas las piezas" : activeCat;
+      const grid = document.getElementById("catalog-products");
+      
+      const filtered = activeCat === "Todo" 
+        ? MAG_PRODUCTS 
+        : MAG_PRODUCTS.filter(p => p.categoria === activeCat);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-muted)">No hay artículos en esta categoría.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const isFav = favorites.includes(p.id);
+        return `
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="${p.img}" alt="${p.nombre}">
+              <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${p.id}')">
+                ${isFav ? '♥' : '♡'}
+              </button>
+            </div>
+            <h3 class="product-title">${p.nombre}</h3>
+            <p class="product-desc">${p.desc}</p>
+            <div class="product-bottom">
+              <span class="product-price">${p.precio} €</span>
+              <button class="btn-rust" style="width:auto; padding:6px 12px;" onclick="addToCart('${p.id}')">Añadir</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+  </script>
+</body>
+</html>
