@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tus Favoritos — MAG</title>
+  <link rel="stylesheet" href="mag-common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="section-tag">GUARDADO</span>
+      <h1 class="section-title">Tus favoritos</h1>
+      <div class="products-grid" id="fav-products"></div>
+    </div>
+  </section>
+
+  <script src="mag-common.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.renderPageProducts = renderFavs;
+      renderFavs();
+    });
+
+    function renderFavs() {
+      const grid = document.getElementById("fav-products");
+      const favItems = MAG_PRODUCTS.filter(p => favorites.includes(p.id));
+
+      if (favItems.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-muted);">Todavía no has guardado nada. Explora el <a href="catalogo.html" style="text-decoration:underline;">catálogo</a> y toca el corazón en las piezas que te gusten.</p>`;
+        return;
+      }
+
+      grid.innerHTML = favItems.map(p => `
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="${p.img}" alt="${p.nombre}">
+            <button class="fav-btn active" onclick="toggleFav('${p.id}')">♥</button>
+          </div>
+          <h3 class="product-title">${p.nombre}</h3>
+          <p class="product-desc">${p.desc}</p>
+          <div class="product-bottom">
+            <span class="product-price">${p.precio} €</span>
+            <button class="btn-rust" style="width:auto; padding:6px 12px;" onclick="addToCart('${p.id}')">Añadir</button>
+          </div>
+        </div>
+      `).join("");
+    }
+  </script>
+</body>
+</html>
