@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Hablamos? — MAG</title>
+  <link rel="stylesheet" href="mag-common.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section class="section" style="max-width: 600px; margin: 0 auto;">
+    <div class="wrap">
+      <span class="section-tag">CONTACTO</span>
+      <h1 class="section-title" style="font-size: 40px;">¿Hablamos?</h1>
+      <p style="color:var(--text-muted); margin-bottom: 32px; font-size: 14px;">
+        Cuéntanos qué necesitas y seguimos la conversación por WhatsApp, que es donde mejor nos entendemos: podemos enseñarte telas, fotos y avances de tu pieza.
+      </p>
+
+      <form id="contact-form" onsubmit="sendWhatsApp(event)">
+        <div style="margin-bottom: 20px;">
+          <label style="display:block; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Tu nombre</label>
+          <input type="text" id="contact-name" required style="width:100%; padding:12px; border:1px solid var(--border-light); background:#fff; outline:none; border-radius:4px;">
+        </div>
+        <div style="margin-bottom: 24px;">
+          <label style="display:block; font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Tu mensaje</label>
+          <textarea id="contact-msg" rows="4" required placeholder="Por ejemplo: quiero un neceser con el nombre de mi hija bordado..." style="width:100%; padding:12px; border:1px solid var(--border-light); background:#fff; outline:none; border-radius:4px; font-family:var(--font-sans);"></textarea>
+        </div>
+        <button type="submit" class="btn-rust">Enviar por WhatsApp</button>
+      </form>
+
+      <div style="margin-top: 40px; font-size: 13px; color: var(--text-muted);">
+        <p style="margin-bottom: 6px;">WhatsApp: <strong>+34 636 95 25 95</strong></p>
+        <p style="margin-bottom: 6px;">Instagram: <strong>@mag.handmade</strong></p>
+        <p>Email: <strong>mag.handmade@gmail.com</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <script src="mag-common.js"></script>
+  <script>
+    function sendWhatsApp(e) {
+      e.preventDefault();
+      const name = document.getElementById("contact-name").value;
+      const msg = document.getElementById("contact-msg").value;
+      const text = `Hola! Soy ${name}. ${msg}`;
+      window.open(`https://wa.me/${window.MAG_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+    }
+  </script>
+</body>
+</html>
